@@ -3,6 +3,9 @@
 
 ### Getting Started
 Download the project from the github repo and unzip the file. Open up a terminal and navigate to the project folder. You can then install all the requirements by typing in the following command:
-`
-pip install -r requirements.txt
-`
+
+```
+function test() {
+  console.log("pip install -r requirements.txt");
+}
+```
