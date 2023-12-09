@@ -17,17 +17,14 @@ def home():
     return render_template('index.html')
 
 # Route for prediction using the GLM model
-@app.route('/process_json', methods=['POST'])
-def process_json():
+@app.route('/predict', methods=['POST'])
+def predict():
     try:
-        # Get the uploaded file
-        json_file = request.files['jsonFile']
+        # Assuming the input data is in JSON format
+        input_data = request.json
 
-        # Load JSON data from the file
-        data = json_file.read()
-
-        # Convert JSON to a DataFrame
-        input_data = pd.read_json(data)
+        # Perform any necessary preprocessing on input_data if needed
+        input_data = pd.DataFrame.from_dict(input_data)
 
         # Make predictions using the loaded model
         glm_model = pickle.load(open('glm_model.pickle','rb'))
@@ -39,10 +36,10 @@ def process_json():
 
         # Return the predictions as JSON
         return predicted_outcome.to_json(orient='records')[1:-1].replace('},{', '} {')
+        #jsonify({'predictions': predictions.tolist()})
 
     except Exception as e:
         return jsonify({'error': str(e)})
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
