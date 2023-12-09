@@ -6,6 +6,7 @@ For the API, please return the:
 the variables should be returned in alphabetical order in the API return.
 """
 from flask import Flask, request, jsonify, render_template
+import pandas as pd
 import pickle
 
 app = Flask(__name__)
@@ -23,13 +24,15 @@ def predict():
         input_data = request.json
 
         # Perform any necessary preprocessing on input_data if needed
+        df = pd.DataFrame([input_data])
 
         # Make predictions using the loaded model
         glm_model = pickle.load(open('glm_model.pickle','rb'))
-        #predictions = glm_model.predict([input_data])
+        predictions = glm_model.predict(df)
+        predictions = predictions[0]
 
         # Return the predictions as JSON
-        return input_data #jsonify({'predictions': predictions.tolist()})
+        return str(predictions) #jsonify({'predictions': predictions.tolist()})
 
     except Exception as e:
         return jsonify({'error': str(e)})
