@@ -12,7 +12,7 @@ import pickle
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
+def home():
     # RENDER TEMPLATE
     return 'Hello, World! This is your API.'
 
@@ -24,15 +24,19 @@ def predict():
         input_data = request.json
 
         # Perform any necessary preprocessing on input_data if needed
-        df = pd.DataFrame([input_data])
+        input_data = pd.DataFrame.from_dict(input_data)
 
         # Make predictions using the loaded model
         glm_model = pickle.load(open('glm_model.pickle','rb'))
-        predictions = glm_model.predict(df)
-        predictions = predictions[0]
+
+        # Calculate probabilities and format predictions (Unit test length is > 1 for probs)
+        predicted_outcome = input_data
+        predicted_outcome['business_outcome']= glm_model.predict(predicted_outcome)
+        predicted_outcome['phat'] = pd.qcut(predicted_outcome['business_outcome'], q = [0, .25, .5, .75, 1.]).astype(str)
 
         # Return the predictions as JSON
-        return str(predictions) #jsonify({'predictions': predictions.tolist()})
+        return predicted_outcome.to_json(orient='records')[1:-1].replace('},{', '} {')
+        #jsonify({'predictions': predictions.tolist()})
 
     except Exception as e:
         return jsonify({'error': str(e)})
