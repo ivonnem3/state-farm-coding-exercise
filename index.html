@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Background with Logo</title>
+    <style>
+        body {
+            background-color: red;
+            color: white;
+            text-align: center;
+            padding: 50px;
+            font-family: Arial, sans-serif;
+        }
+
+        #logo {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+        }
+
+        #importButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: white;
+            color: red;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+            transition: transform 0.2s ease-out;
+        }
+
+        #importButton:hover {
+            transform: scale(1.05);
+        }
+
+        #uploadForm {
+            margin-top: 30px;
+        }
+
+        #jsonFile {
+            display: none; /* Hide the default file input */
+        }
+
+        #uploadLabel {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: white;
+            color: red;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s ease-out;
+        }
+
+        #uploadLabel:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<image id="logo" src="static/State-Farm-Hero.svg" alt="State Farm Logo">
+
+Welcome! Please select the JSON file below that you would like some buisness insight into.
+
+<div id="uploadForm">
+    <label id="uploadLabel" for="jsonFile">Import JSON file</label>
+    <input type="file" id="jsonFile" name="jsonFile" accept=".json" required>
+    <br>
+    <button type="submit" style="display: none;">Upload and Process</button>
+</div>
+
+<div id="results" style="display: none;">
+    <h2>Results:</h2>
+    <p id="predictionText"></p>
+</div>
+
+<script>
+    // Function to show results
+    function showResults(predictions) {
+        const resultsDiv = document.getElementById('results');
+        const predictionText = document.getElementById('predictionText');
+
+        resultsDiv.style.display = 'block';
+        predictionText.textContent = 'Predictions: ' + predictions.join(', ');
+    }
+</script>
+
+</body>
+</html>
