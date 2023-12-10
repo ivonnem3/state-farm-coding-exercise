@@ -9,6 +9,7 @@ from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import pickle
 from data_segmentation_processing import prediction_data_processing
+import os
 
 app = Flask(__name__)
 

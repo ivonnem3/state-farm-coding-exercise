@@ -57,12 +57,35 @@
 
         #uploadLabel:hover {
             transform: scale(1.05);
+
+
+        }
+        img{
+          width: 100%;
+          height:auto;
+          max-width: 800px;
+      }
+      table {
+            width: 80%;
+            margin: 40px auto; /* Center the table and add space */
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dcdcdc; /* White borders for cells */
+            padding: 10px;
+            text-align: center; /* Center the text */
+            color: #000000; /* Black text color for cells */
+            background-color: #ffffff; /* White background color for cells */
+        }
+        th {
+            background-color: #ff0000; /* Red background color for header cells */
+            color: #ffffff; /* White text color for header cells */
         }
     </style>
 </head>
 <body>
 
-<image id="logo" src="static/State-Farm-Hero.svg" alt="State Farm Logo">
+<img id="logo" src="static/img/State-Farm-Hero.svg" alt="State Farm Logo" />
 
 Welcome! Please select the JSON file below that you would like some buisness insight into.
 
@@ -72,6 +95,19 @@ Welcome! Please select the JSON file below that you would like some buisness ins
     <br>
     <button type="submit" style="display: none;">Upload and Process</button>
 </div>
+
+<!-- Two-column table for API calls -->
+    <table>
+        <tr>
+            <th>API Endpoint</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>/predict</td>
+            <td> Return the predicted outcome (business_outcome), predicted probability (phat), and all model inputs </td>
+        </tr>
+        <!-- Add more rows as needed -->
+    </table>
 
 <div id="results" style="display: none;">
     <h2>Results:</h2>
