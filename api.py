@@ -38,9 +38,12 @@ def predict():
         predicted_outcome['business_outcome']= glm_model.predict(predicted_outcome)
         predicted_outcome['phat'] = pd.qcut(predicted_outcome['business_outcome'], q = [0, .25, .5, .75, 1.]).astype(str)
 
+        # Filter prediction for 75th percentile & arrange in alphabetical order
+        predicted_outcome = predicted_outcome[predicted_outcome['business_outcome'] >= 0.75]
+        predicted_outcome = predicted_outcome.reindex(sorted(predicted_outcome.columns), axis=1)
+
         # Return the predictions as JSON
         return predicted_outcome.to_json(orient='records')[1:-1].replace('},{', '} {')
-        #jsonify({'predictions': predictions.tolist()})
 
     except Exception as e:
         return jsonify({'error': str(e)})
