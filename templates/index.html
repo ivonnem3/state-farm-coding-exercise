@@ -57,21 +57,111 @@
 
         #uploadLabel:hover {
             transform: scale(1.05);
+
+
+        }
+        img{
+          width: 100%;
+          height:auto;
+          max-width: 800px;
+      }
+      table {
+            width: 80%;
+            margin: 40px auto; /* Center the table and add space */
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dcdcdc; /* White borders for cells */
+            padding: 10px;
+            text-align: center; /* Center the text */
+            color: #000000; /* Black text color for cells */
+            background-color: #ffffff; /* White background color for cells */
+        }
+        th {
+            background-color: #ff0000; /* Red background color for header cells */
+            color: #ffffff; /* White text color for header cells */
         }
     </style>
 </head>
 <body>
 
-<image id="logo" src="State-Farm-Hero.svg" alt="State Farm Logo">
+<img id="logo" src="../static/img/State-Farm-Hero.svg" alt="State Farm Logo" />
 
-Welcome! Please select the JSON file below that you would like some buisness insight into.
+Welcome! Please select the JSON file below that you would like some buisness insight into. You can use the API Endpoint or Import a file below.
 
 <div id="uploadForm">
     <label id="uploadLabel" for="jsonFile">Import JSON file</label>
-    <input type="file" id="jsonFile" name="jsonFile" accept=".json" required>
+    <input type="file" id="jsonFile" name="jsonFile" accept=".json" required onchange="submitForm()">
     <br>
     <button type="submit" style="display: none;">Upload and Process</button>
 </div>
 
+
+<!-- Two-column table for API calls -->
+    <table>
+        <tr>
+            <th>API Endpoint</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>/predict</td>
+            <td> Return the predicted outcome (business_outcome), predicted probability (phat), and all model inputs </td>
+        </tr>
+        <!-- Add more rows as needed -->
+    </table>
+
+    <script>
+    function uploadAndProcess() {
+        const fileInput = document.getElementById('jsonFile');
+        const file = fileInput.files[0];
+
+        if (file) {
+            const formData = new FormData();
+            formData.append('jsonFile', file);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(predictions => {
+                showResults(predictions);
+                showSuccessMessage('File successfully uploaded and processed!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showErrorMessage('Error uploading and processing the file.');
+            });
+        } else {
+            showErrorMessage('Please select a JSON file before uploading.');
+        }
+    }
+
+    function showResults(predictions) {
+        // ... (rest of the JavaScript code)
+    }
+
+    function showSuccessMessage(message) {
+        const successMessage = document.getElementById('successMessage');
+        successMessage.textContent = message;
+        successMessage.style.color = 'green';
+        successMessage.style.display = 'block';
+    }
+
+    function showErrorMessage(message) {
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = message;
+        errorMessage.style.color = 'red';
+        errorMessage.style.display = 'block';
+    }
+
+    function submitForm() {
+    document.getElementById('uploadForm').submit();
+    }
+
+    </script>
+
+    <div id="successMessage" style="display: none;"></div>
+    <div id="errorMessage" style="display: none;"></div>
 </body>
 </html>

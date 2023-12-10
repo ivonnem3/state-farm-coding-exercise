@@ -11,7 +11,8 @@ import pickle
 from data_segmentation_processing import prediction_data_processing
 import os
 
-app = Flask(__name__, static_url_path='/static')
+app = Flask(__name__)
+app.static_folder = 'static'
 
 @app.route('/')
 def home():
