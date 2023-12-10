@@ -49,16 +49,5 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-# New route for form submission
-@app.route('/upload', methods=['POST','GET'])
-def upload():
-    # Access the uploaded file using request.files
-    file = request.files['jsonFile']
-
-    # Process the file as needed
-
-    # Return a response, for example:
-    return jsonify({'status': 'success'})
-
 if __name__ == '__main__':
     app.run(debug=True, port=1313)
