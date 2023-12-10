@@ -50,7 +50,7 @@ def predict():
         return jsonify({'error': str(e)})
 
 # New route for form submission
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST','GET'])
 def upload():
     # Access the uploaded file using request.files
     file = request.files['jsonFile']
