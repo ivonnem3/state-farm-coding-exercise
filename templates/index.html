@@ -91,13 +91,9 @@ Welcome! Please select the JSON file below that you would like some buisness ins
 
 <div id="uploadForm">
     <label id="uploadLabel" for="jsonFile">Import JSON file</label>
-    <input type="file" id="jsonFile" name="jsonFile" accept=".json" required onchange="submitForm()">
-    <br>
-    <button type="submit" style="display: none;">Upload and Process</button>
+    <input type="file" id="jsonFile" name="jsonFile" accept=".json" required onchange="uploadAndProcess()">
 </div>
 
-
-<!-- Two-column table for API calls -->
     <table>
         <tr>
             <th>API Endpoint</th>
@@ -138,30 +134,20 @@ Welcome! Please select the JSON file below that you would like some buisness ins
     }
 
     function showResults(predictions) {
-        // ... (rest of the JavaScript code)
+        // Display the results as needed
+        console.log(predictions);
     }
 
     function showSuccessMessage(message) {
-        const successMessage = document.getElementById('successMessage');
-        successMessage.textContent = message;
-        successMessage.style.color = 'green';
-        successMessage.style.display = 'block';
+        // Display success message
+        console.log(message);
     }
 
     function showErrorMessage(message) {
-        const errorMessage = document.getElementById('errorMessage');
-        errorMessage.textContent = message;
-        errorMessage.style.color = 'red';
-        errorMessage.style.display = 'block';
+        // Display error message
+        console.error(message);
     }
-
-    function submitForm() {
-    document.getElementById('uploadForm').submit();
-    }
-
     </script>
 
-    <div id="successMessage" style="display: none;"></div>
-    <div id="errorMessage" style="display: none;"></div>
 </body>
 </html>
