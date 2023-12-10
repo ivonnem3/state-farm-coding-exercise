@@ -85,9 +85,7 @@
 </head>
 <body>
 
-<img id="logo" src="static/img/State-Farm-Hero.svg" alt="State Farm Logo" />
-
-Welcome! Please select the JSON file below that you would like some buisness insight into.
+Welcome! Please select the JSON file below that you would like some buisness insight into. You can use the API Endpoint or Import a file below.
 
 <div id="uploadForm">
     <label id="uploadLabel" for="jsonFile">Import JSON file</label>
@@ -109,21 +107,53 @@ Welcome! Please select the JSON file below that you would like some buisness ins
         <!-- Add more rows as needed -->
     </table>
 
-<div id="results" style="display: none;">
-    <h2>Results:</h2>
-    <p id="predictionText"></p>
-</div>
+    <script>
+    function uploadAndProcess() {
+        const fileInput = document.getElementById('jsonFile');
+        const file = fileInput.files[0];
 
-<script>
-    // Function to show results
-    function showResults(predictions) {
-        const resultsDiv = document.getElementById('results');
-        const predictionText = document.getElementById('predictionText');
+        if (file) {
+            const formData = new FormData();
+            formData.append('jsonFile', file);
 
-        resultsDiv.style.display = 'block';
-        predictionText.textContent = 'Predictions: ' + predictions.join(', ');
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(predictions => {
+                showResults(predictions);
+                showSuccessMessage('File successfully uploaded and processed!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showErrorMessage('Error uploading and processing the file.');
+            });
+        } else {
+            showErrorMessage('Please select a JSON file before uploading.');
+        }
     }
-</script>
 
+    function showResults(predictions) {
+        // ... (rest of the JavaScript code)
+    }
+
+    function showSuccessMessage(message) {
+        const successMessage = document.getElementById('successMessage');
+        successMessage.textContent = message;
+        successMessage.style.color = 'green';
+        successMessage.style.display = 'block';
+    }
+
+    function showErrorMessage(message) {
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = message;
+        errorMessage.style.color = 'red';
+        errorMessage.style.display = 'block';
+    }
+    </script>
+
+    <div id="successMessage" style="display: none;"></div>
+    <div id="errorMessage" style="display: none;"></div>
 </body>
 </html>
