@@ -8,6 +8,7 @@ the variables should be returned in alphabetical order in the API return.
 from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import pickle
+from data_segmentation_processing import prediction_data_processing
 
 app = Flask(__name__)
 
@@ -24,13 +25,15 @@ def predict():
         input_data = request.json
 
         # Perform any necessary preprocessing on input_data if needed
-        input_data = pd.DataFrame.from_dict(input_data)
+        input_data = pd.DataFrame(input_data)
 
         # Make predictions using the loaded model
         glm_model = pickle.load(open('glm_model.pickle','rb'))
 
+        # Imprement sata data_segmentation_processing on the input data
+        predicted_outcome = prediction_data_processing(input_data)
+
         # Calculate probabilities and format predictions (Unit test length is > 1 for probs)
-        predicted_outcome = input_data
         predicted_outcome['business_outcome']= glm_model.predict(predicted_outcome)
         predicted_outcome['phat'] = pd.qcut(predicted_outcome['business_outcome'], q = [0, .25, .5, .75, 1.]).astype(str)
 

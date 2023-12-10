@@ -120,26 +120,33 @@ def prediction_data_processing(data):
     data_imputed_std = pd.DataFrame(std_scaler.fit_transform(data_imputed), columns=data_imputed.columns)
 
     # Create Dummies
-    dumb5 = pd.get_dummies(data['x5'], drop_first=True, prefix='x5', prefix_sep='_', dummy_na=True)
+    dumb5 = pd.get_dummies(data['x5'], drop_first=True, prefix='x5', prefix_sep='_', dummy_na=True, dtype=float)
     data_imputed_std = pd.concat([data_imputed_std, dumb5], axis=1, sort=False)
 
-    dumb31 = pd.get_dummies(data['x31'], drop_first=True, prefix='x31', prefix_sep='_', dummy_na=True)
+    dumb31 = pd.get_dummies(data['x31'], drop_first=True, prefix='x31', prefix_sep='_', dummy_na=True, dtype=float)
     data_imputed_std = pd.concat([data_imputed_std, dumb31], axis=1, sort=False)
 
-    dumb81 = pd.get_dummies(data['x81'], drop_first=True, prefix='x81', prefix_sep='_', dummy_na=True)
+    dumb81 = pd.get_dummies(data['x81'], drop_first=True, prefix='x81', prefix_sep='_', dummy_na=True, dtype=float)
     data_imputed_std = pd.concat([data_imputed_std, dumb81], axis=1, sort=False)
 
-    dumb82 = pd.get_dummies(data['x82'], drop_first=True, prefix='x82', prefix_sep='_', dummy_na=True)
+    dumb82 = pd.get_dummies(data['x82'], drop_first=True, prefix='x82', prefix_sep='_', dummy_na=True, dtype=float)
     data_imputed_std = pd.concat([data_imputed_std, dumb82], axis=1, sort=False)
 
     del dumb5, dumb31, dumb81, dumb82
 
-    # Select Variables
+    # Select variables if they are on the dataframe if not then create a zero-column
     variables = ['x5_saturday','x81_July','x81_December','x31_japan','x81_October',
                  'x5_sunday','x31_asia','x81_February','x91','x81_May','x5_monday','x81_September',
                  'x81_March','x53','x81_November','x44','x81_June','x12','x5_tuesday','x81_August',
                  'x81_January','x62','x31_germany','x58','x56']
 
-    data_imputed_std = data_imputed_std[variables]
+    n_rows = data_imputed_std.shape[0]
+    processed_data = pd.DataFrame()
+    for var in variables:
+        if var in data_imputed_std.columns:
+            processed_data[var] = data_imputed_std[var]
 
-    return data_imputed_std
+        else:
+            processed_data[var] = [0] * n_rows
+
+    return processed_data
