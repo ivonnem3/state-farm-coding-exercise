@@ -1,3 +1,8 @@
+"""
+Description:
+    This is our business forcasting api application
+"""
+
 from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import pickle
@@ -10,12 +15,21 @@ app.static_folder = 'static'
 
 @app.route('/')
 def home():
+    """
+    Description:
+        This function is the local host 1313 main route, where our render_template contains
+        information about or api call
+    """
     # RENDER TEMPLATE
     return render_template('index.html')
 
 # Route for prediction using the GLM model
 @app.route('/predict', methods=['POST'])
 def predict():
+    """
+    Description:
+        This funtion is the main api route for obtaining our predictions
+    """
     try:
         # Assuming the input data is in JSON format
         input_data = request.json

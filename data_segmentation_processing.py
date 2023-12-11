@@ -1,5 +1,7 @@
 """
 Description:
+This python script is used to processed the training dataset for our GLM Model including, special characted replacement,
+one hot encoding, imputing and standarizing our model. 
 """
 # Load Libraries
 import numpy as np
@@ -12,8 +14,11 @@ import pickle
 def fix_special_char(data):
     """
     Description:
-    Input: pd.DataFrame
+            This function is able replaces all the special characters known in our datasets
+    Attributes:
+            data (pd.DataFrame) : Original Dataframe
     Output:
+            data (pd.DataFrame) : Updated Dataframe
     """
     # Fix money and percents
     if 'x12' in data.columns:
@@ -34,8 +39,13 @@ def fix_special_char(data):
 def create_dummies(data,data_imputed_std):
     """
     Description:
-    Input: pd.DataFrame
+        This functions create the dummy variables for the knonw categorical values in our dataset and
+        appends them to our processed dataset
+    Attributes:
+        data (pd.Dataframe) : Original dataset
+        data_imputed_std (pd.DataFrame): Impute and processed dataframe
     Output:
+        data_imputed_std (pd.DataFrame): Processed dataframe with added dummy one-hot encoding
     """
     if 'x5' in data.columns:
         dumb5 = pd.get_dummies(data['x5'], drop_first=True, prefix='x5', prefix_sep='_', dummy_na=True, dtype=float)
@@ -68,8 +78,14 @@ def create_dummies(data,data_imputed_std):
 def training_data_processing(data):
     """
     Description:
-    Input: pd.DataFrame
+        This function takes care of all the data processing needed for training and tuning our GLM model.
+
+    Input:
+        data (pd.DataFrame): Preprocessed dataframe
     Output:
+        train_imputed_std (pd.DataFrame): Imputed, standarized, one hot encoded dataset
+        val_imputed_std (pd.DataFrame): Imputed, standarized, one hot encoded dataset
+        test_imputed_std (pd.DataFrame): Imputed, standarized, one hot encoded dataset
     """
     # Create a deep copy of dataframe
     data = data.copy(deep=True)

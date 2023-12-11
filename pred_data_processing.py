@@ -1,5 +1,6 @@
 """
 Description:
+    This python files purpose is to format, filter, standarized, and impute, our new data.
 """
 import json
 import pandas as pd
@@ -11,9 +12,13 @@ from data_segmentation_processing import fix_special_char
 
 def data_formating(json_data):
     """
-    [Summary]
-    Input:
-    Output: pd.DataFrame
+    Description:
+        This function takes our JSON data and is format, filters, standarizes, and imputes, our new data
+        ready for predicting.
+    Attributes:
+        json_data (pd.DataFrame): Dumped json obtained from our POST api
+    Output:
+        processed_data (pd.DataFrame): JSON data transfromed into our final dataframe ready for predicting
     """
     # Import imputer and std_scaler from trined model set column names
     with open('imputer.pickle', 'rb') as file:
@@ -86,6 +91,7 @@ def data_formating(json_data):
         else:
             processed_data[var] = [0] * n_rows
 
+    # Delete old dataframe
     del imputed_std_df
 
     return processed_data

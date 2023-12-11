@@ -1,3 +1,7 @@
+"""
+Description:
+    This python file is primarly used to test our api calls.
+"""
 import unittest
 import json
 from flask import Flask
@@ -10,7 +14,10 @@ class TestAPI(unittest.TestCase):
         self.app = app.test_client()
 
     def test_single_entry_request(self):
-        # Test Case: API can handle a JSON input request with one entry
+        """
+         Description:
+            Test Case: API can handle a JSON input request with one entry
+        """
 
         # Load sample input for a single entry from a JSON file
         with open("sample_single_entry.json", "r") as file:
@@ -29,7 +36,10 @@ class TestAPI(unittest.TestCase):
         self.validate_response_structure(results)
 
     def test_multiple_entries_request(self):
-        # Test Case: API can handle a JSON input request with multiple entries
+        """
+         Description:
+            Test Case: API can handle a JSON input request with multiple entries
+        """
 
         # Load sample input for multiple entries from a JSON file
         with open("sample_multiple_entries.json", "r") as file:
@@ -48,7 +58,10 @@ class TestAPI(unittest.TestCase):
         self.validate_response_structure(results)
 
     def test_incomplete_request(self):
-        # Test Case: API can handle an incomplete JSON input request with missing values
+        """
+         Description:
+            Test Case: API can handle an incomplete JSON input request with missing values
+        """
 
         # Load sample incomplete input from a JSON file
         with open("sample_incomplete_entry.json", "r") as file:
@@ -67,7 +80,10 @@ class TestAPI(unittest.TestCase):
         self.validate_response_structure(results)
 
     def test_empty_request(self):
-        # Test Case: API can handle an empty JSON input entry
+        """
+         Description:
+            Test Case: API can handle an empty JSON input entry
+        """
 
         # Make a POST request to the /predict endpoint with an empty JSON
         response = self.app.post('/predict', json={})
