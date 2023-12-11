@@ -59,6 +59,6 @@ final_logit = sm.Logit(all_train_y, all_train_X)
 ## Final Model Fit
 final_result = final_logit.fit()
 
-# Pickle model
+# Pickle Final Model
 with open('glm_model.pickle', 'wb') as f:
     pickle.dump(final_result, f)

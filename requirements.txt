@@ -9,3 +9,7 @@ sys
 
 # API Libraries
 flask == 2.2.2
+requests
+
+# App testing
+unittest
