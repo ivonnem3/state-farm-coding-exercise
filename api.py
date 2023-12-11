@@ -1,10 +1,3 @@
-"""
-For the API, please return the:
-    - predicted outcome (variable name is business_outcome)
-    - predicted probability (variable name is phat)
-    - all model inputs;
-the variables should be returned in alphabetical order in the API return.
-"""
 from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import pickle
@@ -27,14 +20,19 @@ def predict():
         # Assuming the input data is in JSON format
         input_data = request.json
 
+        if not input_data:
+            # If there is no input data, return an empty list
+            return jsonify([])
+
         # Make predictions using the loaded model
-        glm_model = pickle.load(open('glm_model.pickle','rb'))
+        with open('glm_model.pickle', 'rb') as file:
+            glm_model = pickle.load(file)
 
         # Format input data using data_formating
         predicted_outcome = data_formating(input_data)
 
         # Calculate Predictions (Unit test length is > 1 for probs)
-        predicted_outcome['business_outcome']= glm_model.predict(predicted_outcome)
+        predicted_outcome['business_outcome'] = glm_model.predict(predicted_outcome)
 
         # Calculate Probabilities
         """

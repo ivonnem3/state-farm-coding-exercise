@@ -16,8 +16,11 @@ def data_formating(json_data):
     Output: pd.DataFrame
     """
     # Import imputer and std_scaler from trined model set column names
-    imputer = pickle.load(open('imputer.pickle','rb'))
-    std_scaler = pickle.load(open('std_scaler.pickle','rb'))
+    with open('imputer.pickle', 'rb') as file:
+        imputer = pickle.load(file)
+
+    with open('std_scaler.pickle', 'rb') as file:
+        std_scaler = pickle.load(file)
 
     # Need to edit this out later -- not standard
     train_imputed_columns = ['x0', 'x1', 'x2', 'x3', 'x4', 'x6', 'x7', 'x8', 'x9', 'x10', 'x11',
@@ -52,7 +55,7 @@ def data_formating(json_data):
 
     # Impute and Scale data using the models from before
     imputed_df =  pd.DataFrame(imputer.transform(df.drop(columns=new_categorical_cols)), columns=df.drop(columns=new_categorical_cols).columns)
-    imputed_std_df= pd.DataFrame(std_scaler.transform(imputed_df), columns=train_imputed_columns) # Only works if all columns exist in the datafram, need to fix 
+    imputed_std_df= pd.DataFrame(std_scaler.transform(imputed_df), columns=train_imputed_columns) # Only works if all columns exist in the datafram, need to fix
 
     # Get Dummies
     n_rows = imputed_std_df.shape[0]
