@@ -92,14 +92,28 @@ Welcoome! Use the API Endpoints to interact with the prediction business model.
     <table>
         <tr>
             <th>API Endpoint</th>
+            <th>Action</th>
             <th>Description</th>
         </tr>
         <tr>
-            <td>localhost:1313
-/predict</td>
+            <td>localhost:1313/predict</td>
+            <td>GET</td>
             <td> Return the predicted outcome (business_outcome), predicted probability (phat), and all model inputs </td>
+
         </tr>
-        <!-- Add more rows as needed -->
+      </tr>
+      <tr>
+          <td>/localhost1313/predict/predict</td>
+          <td>POST</td>
+          <td> This API allows you to feed in your variables and obtain the predictions and probabilities if the prediction is >= 0.75 </td>
+
+      </tr>
+    </tr>
+    <tr>
+        <td>localhost:1313/predict_all/predict</td>
+        <td>POST</td>
+        <td> This allows you to get all of the predictions for all of your input data </td>
+    </tr>
     </table>
 
 
