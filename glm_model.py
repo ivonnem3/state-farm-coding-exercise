@@ -18,10 +18,6 @@ import statsmodels.api as sm
 import pickle
 from data_segmentation_processing import training_data_processing
 
-## Local Path Set up
-path = os.getcwd()
-os.chdir('state-farm-coding-exercise')
-
 ## Load Model Train data
 raw_train = pd.read_csv('exercise_26_train.csv')
 
