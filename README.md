@@ -35,5 +35,6 @@ brew upgrade python
 ```
 
 
-
 ![localhost_main page](localhost_1313_screenshot.png)
+
+Thank you!
